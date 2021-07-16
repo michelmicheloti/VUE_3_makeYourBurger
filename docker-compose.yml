@@ -2,6 +2,7 @@
 version: '3.7'
 services:
   frontend:
+    container_name: frontend
     build:
       context: .
       target: 'develop-stage'
@@ -10,3 +11,11 @@ services:
     volumes:
     - '.:/app'
     command: /bin/sh -c "yarn serve"
+
+  api:
+    image: vimagick/json-server
+    command: -H 0.0.0.0 -p 3000 -w db.json
+    ports:
+      - "3000:3000"
+    volumes:
+      - ./db:/data
