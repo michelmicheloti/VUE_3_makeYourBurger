@@ -1,18 +1,21 @@
 # for local development
-version: '3.7'
+version: '3'
 services:
   frontend:
     container_name: frontend
     build:
       context: .
       target: 'develop-stage'
+      # target: 'production-stage'
     ports:
     - '8080:8080'
+    - '80:80'
     volumes:
-    - '.:/app'
-    command: /bin/sh -c "yarn serve"
+    - './src:/app/src'
+    command: /bin/sh -c "npm run serve"
 
   api:
+    container_name: backend
     image: vimagick/json-server
     command: -H 0.0.0.0 -p 3000 -w db.json
     ports:
